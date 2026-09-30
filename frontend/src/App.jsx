@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { API } from './api';
 import {
   Brain,
   Sparkles,
@@ -68,7 +69,7 @@ export default function App() {
   // Load students list
   const fetchStudents = async () => {
     try {
-      const res = await fetch('/api/students');
+      const res = await fetch(`${API}/api/students`);
       if (res.ok) {
         const data = await res.json();
         if (data.success && data.students) {
@@ -84,7 +85,7 @@ export default function App() {
   const loadStudent = async (rollNo) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/student/${rollNo}`);
+      const res = await fetch(`${API}/api/student/${rollNo}`);
       const data = await res.json();
       if (data.success && data.student) {
         setStudent(data.student);
@@ -106,7 +107,7 @@ export default function App() {
   // Fetch AI Recommendation
   const fetchRecommendation = async (mastery) => {
     try {
-      const res = await fetch('/api/ai/recommend', {
+      const res = await fetch(`${API}/api/ai/recommend`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mastery: mastery || 0 })
@@ -135,7 +136,7 @@ export default function App() {
     setIsTyping(true);
 
     try {
-      const res = await fetch('/api/ai/chat', {
+      const res = await fetch(`${API}/api/ai/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: query })
@@ -188,7 +189,7 @@ export default function App() {
     };
 
     try {
-      const res = await fetch('/api/student', {
+      const res = await fetch(`${API}/api/student`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
